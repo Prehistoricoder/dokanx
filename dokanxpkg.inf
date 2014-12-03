@@ -1,0 +1,55 @@
+; Copyright (C) Eric Rasmussen for the DokanX Library
+
+[Version] 
+Signature   = "$WINDOWS NT$" 
+Provider    = %CompanyName% 
+DriverVer   = 12/02/2014,1.0.0.0 
+DriverPackageType = FileSystem 
+DriverPackageDisplayName = %DriverDesc% 
+CatalogFile = dokanx.cat
+
+[Dokan_dll_file] 
+dokanx.dll 
+
+[Dokan_sys_file] 
+dokanx.sys 
+
+[DestinationDirs] 
+Dokan_sys_file = 12 ; system32 
+Dokan_dll_file = 11 ; system32\drivers 
+
+[SourceDisksNames] 
+1 = %SrcDisk1% 
+
+
+[SourceDisksFiles] 
+dokanx.dll = 1 
+dokanx.sys = 1 
+
+[DefaultInstall] 
+CopyFiles = Dokan_sys_file, Dokan_dll_file 
+
+[DefaultInstall.Services] 
+AddService = %ServiceName%,,driver.Service 
+
+[driver.Service] 
+DisplayName    = %ServiceName% 
+Description    = %ServiceDesc% 
+ServiceBinary  = %12%\dokanx.sys 
+ServiceType    = 2 ;    SERVICE_FILE_SYSTEM_DRIVER 
+StartType      = 1 ;    SERVICE_SYSTEM_START 
+ErrorControl   = 1 ;    SERVICE_ERROR_NORMAL 
+LoadOrderGroup = "File System" 
+
+[DefaultUninstall] 
+DelFiles   = Dokan_dll_file, Dokan_sys_file 
+
+[DefaultUninstall.Services] 
+DelService = %ServiceName%,0x200 
+
+[Strings] 
+CompanyName  = "dokanx.ericr.org" 
+SrcDisk1     = "Source Disk 1" 
+ServiceName  = "DokanX" 
+ServiceDesc  = "DokanX Mounter Service" 
+DriverDesc   = "DokanX Filesystem Driver" 

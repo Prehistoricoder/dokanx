@@ -36,7 +36,7 @@ with this program. If not, see <http://www.gnu.org/licenses/>.
     #define DOKANAPI __declspec(dllexport) __stdcall
   #endif
 #else
-  #define DOKANAPI
+#define DOKANAPI __declspec(dllexport) __stdcall
 #endif
 
 #define DOKAN_CALLBACK __stdcall
